@@ -1,6 +1,12 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderProductController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\Routing\Router;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,9 +43,17 @@ Route::put('/put', function () {
 Route::prefix('admin')->group(function () {
     Route::get('posts/{post}/comments/{comment}', function ($postId, $commentId) {
         return "Post ID: $postId, Comment ID: $commentId";
-    
     });
     Route::get('users/{name?}', function ($name = 'John') {
         return $name;
     });
-    });
+});
+Route::resource('users', UserController::class);
+Route::resource('categories', CategoryController::class);
+Route::resource('products', ProductController::class);
+Route::resource('orders', OrderController::class);
+Route::resource('orderproducts', OrderProductController::class);
+
+Route::get('/child', function () {
+    return view('child');
+});
